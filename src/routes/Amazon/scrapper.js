@@ -6,7 +6,7 @@ const config = require('../../../config');
 const router = express.Router();
 const { getScrapData } = Helper;
 const { AMAZON_HOST } = config;
-
+const logger = require('../../../logs/init');
 router.get('/', async (req, res) => {
   const {
     query: { q = '', page = 1 }
@@ -18,9 +18,10 @@ router.get('/', async (req, res) => {
   try {
     const response = await axios.get(url);
     const data = getScrapData(response.data);
-    res.send(data);
+    res.status(200).send(data);
   } catch (err) {
-    console.log(err);
+    logger.error(err);
+    res.status(400).send({ message: 'Bad Request' });
   }
 });
 
