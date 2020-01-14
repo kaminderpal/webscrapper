@@ -1,5 +1,4 @@
 const cheerio = require('cheerio');
-const uuid = require('uuid/v4');
 const config = require('../../../config');
 const { AMAZON_HOST } = config;
 
@@ -30,9 +29,12 @@ const getScrapData = data => {
       const rating = $(elem)
         .find('span.a-icon-alt')
         .text();
-
+      const uuid = $(elem)
+        .parent()
+        .parent()
+        .attr('data-asin');
       arr.push({
-        id: uuid().toString(),
+        uuid,
         title,
         price,
         rating,

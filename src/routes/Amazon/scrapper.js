@@ -24,5 +24,4 @@ router.get('/', async (req, res) => {
     res.status(400).send({ message: 'Bad Request' });
   }
 });
-
 module.exports = router;
