@@ -1,6 +1,7 @@
 const express = require('express');
 const os = require('os');
 const cluster = require('cluster');
+const compression = require('compression');
 const config = require('./config');
 const { PORT } = config;
 const scrapper = require('./src/routes/Amazon/scrapper');
@@ -22,7 +23,7 @@ if (cluster.isMaster) {
   });
 } else {
   const app = express();
-
+  app.use(compression());
   //routes
   app.use('/search', scrapper);
   app.use('/', (req, res) => {
